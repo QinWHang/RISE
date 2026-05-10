@@ -16,7 +16,7 @@ RISE/
 ## Installation
 
 ```bash
-cd RISE_CDOE_FULL
+cd RISE
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ## Quick Start
 
 ```bash
-cd RISE_CDOE_FULL
+cd RISE
 PYTHONPATH=. python scripts/run_rise_train.py \
   --input examples/toy_qa.jsonl \
   --output outputs/rise_train_summary.json \
