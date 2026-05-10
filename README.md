@@ -68,20 +68,3 @@ ret:  steps 2, 3, 5
 syn:  steps 6, 7, 8
 ```
 
-## Main Components
-
-- `RISEPipeline`: defines the role-step contract for role-partitioned trajectories.
-- `RISEEvidenceExtractor`: extracts positive, negative, propagated, and semantic-divergence step evidence.
-- `RISEAttributor`: maps step evidence to role-level posterior-strength scores.
-- `RISERouter`: applies margin-based role selection and abstains when evidence is not decisive.
-- `RISEResponsibilityRefiner`: separates visible symptoms from role-level bottleneck targets.
-- `RISERoleGraph`: represents upstream and downstream role connectivity.
-- `RISELossSpec`: records the loss family attached to each update action.
-- `RISEUpdater`: converts route decisions into role-level update plans.
-- `RISETrainer`: runs the selective evolution loop over trajectories.
-- `RISEEvaluator`: runs the public evaluation interface.
-- `RISERunner`: loads configuration, runs train/eval, and writes a unified summary.
-
-## Citation
-
-If you use this code, cite the accompanying paper.
