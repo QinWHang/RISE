@@ -1,0 +1,9 @@
+method: RISE
+delta: 0.03
+roles:
+  orch: [1, 4]
+  ret: [2, 3, 5]
+  syn: [6, 7, 8]
+evaluation:
+  input: examples/toy_qa.jsonl
+  output: outputs/rise_eval_summary.json

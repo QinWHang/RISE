@@ -1,0 +1,22 @@
+method: RISE
+dataset: hotpotqa
+model: qwen2.5-7b-instruct
+delta: 0.03
+role_step_contract:
+  orch: [1, 4]
+  ret: [2, 3, 5]
+  syn: [6, 7, 8]
+evidence:
+  positive_threshold: 0.05
+  negative_threshold: -0.05
+routing:
+  abstention: top2_margin
+  score: posterior_strength
+update:
+  success_action: reinforce
+  failure_action: anchored_repair
+  fallback_action: freeze_all
+paths:
+  train_jsonl: examples/toy_qa.jsonl
+  eval_jsonl: examples/toy_qa.jsonl
+  output_dir: outputs
