@@ -19,8 +19,7 @@ RISE_CODE_FULL/
   scripts/       Experiment, calibration, evaluation, and preprocessing entry points
   configs/       Method and judge configuration files
   prompts/       Judge and role prompt templates
-
-  requirements.txt
+  requirements.txt/
 ```
 ## Installation
 
