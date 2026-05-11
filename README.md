@@ -2,42 +2,42 @@
 Official implementation of "Who Should Evolve? Uncertainty-Aware Role Bottleneck Inference for Multi-Agent LLM Training" with PyTorch.
 RISE converts step-level trajectory evidence into role-level update decisions for role-partitioned multi-step reasoning pipelines.
 
+## OpenRLHF Integration Points
+
+RISE is not a standalone trainer in this snapshot. It uses OpenRLHF components directly:
+
+- `openrlhf.models.actor.Actor` for role policies.
+- `openrlhf.models.loss.DPOLoss` for repair-side preference optimization.
+- `openrlhf.utils.get_strategy` and `openrlhf.utils.deepspeed.DeepspeedStrategy` for DeepSpeed-backed training.
+- `DeepSpeedRoleSelectiveUpdateWrapper` to freeze non-selected roles and step only the selected role.
+  
 ## Structure
 
 ```text
-RISE/
-  rise/                 # RISE public interface
-  scripts/              # Execution entry points
-  configs/              # Relative-path experiment configuration
-  examples/             # Small runnable JSONL example
+RISE_CODE_FULL/
+  openrlhf/      OpenRLHF actor, loss, DeepSpeed strategy, trainer, dataset, and utility modules
+  scripts/       Experiment, calibration, evaluation, and preprocessing entry points
+  configs/       Method and judge configuration files
+  prompts/       Judge and role prompt templates
+
   requirements.txt
 ```
-
 ## Installation
 
 ```bash
 cd RISE
-python -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Quick Start
+## Main RISE Method Path
+
+The main experiment entrypoint is:
 
 ```bash
-cd RISE
-PYTHONPATH=. python scripts/run_rise_train.py \
-  --input examples/toy_qa.jsonl \
-  --output outputs/rise_train_summary.json \
-  --delta 0.03
+python scripts/train_openrlhf_experiment.py
+```
 
-PYTHONPATH=. python scripts/run_rise_eval.py \
-  --input examples/toy_qa.jsonl \
-  --output outputs/rise_eval_summary.json \
-  --delta 0.03
-
-PYTHONPATH=. python scripts/run_rise_pipeline.py \
-  --config configs/rise_hotpotqa.yaml
+The formal runner builds the role-partitioned QA pipeline, creates role policies, performs routing and attribution, and dispatches updates through either local debug training or the OpenRLHF-backed experiment trainer.
 ```
 
 ## Input Format
