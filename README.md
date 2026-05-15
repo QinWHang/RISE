@@ -64,6 +64,22 @@ orch: steps 1, 4
 ret:  steps 2, 3, 5
 syn:  steps 6, 7, 8
 ```
+
+## Main Components
+
+- `RISEPipeline`: defines the role-step contract for role-partitioned trajectories.
+- `RISEEvidenceExtractor`: extracts positive, negative, propagated, and semantic-divergence step evidence.
+- `RISEAttributor`: maps step evidence to role-level posterior-strength scores.
+- `RISERouter`: applies margin-based role selection and abstains when evidence is not decisive.
+- `RISEResponsibilityRefiner`: separates visible symptoms from role-level bottleneck targets.
+- `RISERoleGraph`: represents upstream and downstream role connectivity.
+- `RISELossSpec`: records the loss family attached to each update action.
+- `RISEUpdater`: converts route decisions into role-level update plans.
+- `RISETrainingBackend`: dispatches selective update plans to a public plan backend or an optional OpenRLHF-compatible role-policy backend.
+- `RISETrainer`: runs the selective evolution loop over trajectories.
+- `RISEEvaluator`: runs the public evaluation interface.
+- `RISERunner`: loads configuration, runs train/eval, and writes a unified summary.
+
 ## OpenRLHF Integration Points
 
 RISE is not a standalone trainer in this snapshot. It uses OpenRLHF components directly:
