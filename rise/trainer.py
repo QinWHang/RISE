@@ -4,6 +4,7 @@ from dataclasses import asdict, dataclass
 from typing import Any
 
 from .attribution import RISEAttributor
+from .backends import RISETrainingBackend, build_training_backend
 from .evidence import RISEEvidenceExtractor
 from .pipeline import RISEPipeline, RISETrajectory
 from .responsibility import RISEResponsibilityRefiner
@@ -29,6 +30,7 @@ class RISETrainer:
         pipeline: RISEPipeline | None = None,
         positive_threshold: float = 0.05,
         negative_threshold: float = -0.05,
+        backend: str | RISETrainingBackend = "public",
     ) -> None:
         self.pipeline = pipeline or RISEPipeline()
         self.extractor = RISEEvidenceExtractor(
@@ -39,6 +41,7 @@ class RISETrainer:
         self.router = RISERouter(delta=delta)
         self.refiner = RISEResponsibilityRefiner(self.pipeline)
         self.updater = RISEUpdater()
+        self.backend = backend if isinstance(backend, RISETrainingBackend) else build_training_backend(str(backend))
 
     def step(self, trajectory: RISETrajectory) -> RISETrainEvent:
         trajectory = self.pipeline.normalize_steps(trajectory)
@@ -71,5 +74,6 @@ class RISETrainer:
             "freeze_count": freeze,
             "active_update_rate": active / len(events) if events else 0.0,
             "update_role_counts": role_counts,
+            "training_backend": asdict(self.backend.status()),
             "events": [asdict(event) for event in events],
         }

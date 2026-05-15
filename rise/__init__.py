@@ -1,6 +1,7 @@
 """RISE: Role Inference for Selective Evolution."""
 
 from .attribution import RISEAttributor, RISEEvidence, RISERoleScore
+from .backends import OpenRLHFRoleBackend, RISEBackendStatus, RISETrainingBackend, build_training_backend
 from .config import RISEConfig, config_to_role_steps, load_config
 from .data import load_jsonl, normalize_records, validate_record, write_json
 from .evidence import RISEEvidenceExtractor, RISEStepEvidence
@@ -17,7 +18,10 @@ from .update import RISEUpdatePlan, RISEUpdater
 
 __all__ = [
     "RISEAttributor",
+    "OpenRLHFRoleBackend",
+    "RISEBackendStatus",
     "RISEConfig",
+    "RISETrainingBackend",
     "RISEEvidence",
     "RISEEvidenceExtractor",
     "RISEStepEvidence",
@@ -49,4 +53,5 @@ __all__ = [
     "RISETrainEvent",
     "RISEUpdatePlan",
     "RISEUpdater",
+    "build_training_backend",
 ]

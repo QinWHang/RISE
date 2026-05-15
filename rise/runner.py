@@ -23,6 +23,7 @@ class RISERunner:
             pipeline=self.pipeline,
             positive_threshold=self.config.positive_threshold,
             negative_threshold=self.config.negative_threshold,
+            backend=self.config.training_backend,
         )
         return trainer.fit(trajectories)
 

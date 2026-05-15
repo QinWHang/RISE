@@ -16,6 +16,7 @@ class RISEConfig:
     )
     positive_threshold: float = 0.05
     negative_threshold: float = -0.05
+    training_backend: str = "public"
     train_jsonl: str = "examples/toy_qa.jsonl"
     eval_jsonl: str = "examples/toy_qa.jsonl"
     output_dir: str = "outputs"
@@ -24,6 +25,7 @@ class RISEConfig:
 def load_config(path: Path) -> RISEConfig:
     payload = _load_mapping(path)
     evidence = payload.get("evidence", {}) or {}
+    training = payload.get("training", {}) or {}
     paths = payload.get("paths", {}) or {}
     return RISEConfig(
         method=str(payload.get("method", "RISE")),
@@ -37,6 +39,7 @@ def load_config(path: Path) -> RISEConfig:
         or {"orch": [1, 4], "ret": [2, 3, 5], "syn": [6, 7, 8]},
         positive_threshold=float(evidence.get("positive_threshold", 0.05)),
         negative_threshold=float(evidence.get("negative_threshold", -0.05)),
+        training_backend=str(training.get("backend", payload.get("training_backend", "public"))),
         train_jsonl=str(paths.get("train_jsonl", "examples/toy_qa.jsonl")),
         eval_jsonl=str(paths.get("eval_jsonl", "examples/toy_qa.jsonl")),
         output_dir=str(paths.get("output_dir", "outputs")),
