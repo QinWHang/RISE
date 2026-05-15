@@ -19,6 +19,7 @@ RISE_CODE_FULL/
   scripts/       Experiment, calibration, evaluation, and preprocessing entry points
   configs/       Method and judge configuration files
   prompts/       Judge and role prompt templates
+  rise/          Main Implementation
   requirements.txt/
 ```
 ## Installation
@@ -28,15 +29,22 @@ cd RISE
 pip install -r requirements.txt
 ```
 
-## Main RISE Method Path
-
-The main experiment entrypoint is:
+## Quick Start
 
 ```bash
-python scripts/train_openrlhf_experiment.py
-```
+cd RISE_PUBLIC_CORE
+PYTHONPATH=. python scripts/run_rise_train.py \
+  --input examples/toy_qa.jsonl \
+  --output outputs/rise_train_summary.json \
+  --delta 0.03
 
-The formal runner builds the role-partitioned QA pipeline, creates role policies, performs routing and attribution, and dispatches updates through either local debug training or the OpenRLHF-backed experiment trainer.
+PYTHONPATH=. python scripts/run_rise_eval.py \
+  --input examples/toy_qa.jsonl \
+  --output outputs/rise_eval_summary.json \
+  --delta 0.03
+
+PYTHONPATH=. python scripts/run_rise_pipeline.py \
+  --config configs/rise_hotpotqa.yaml
 ```
 
 ## Input Format
