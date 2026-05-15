@@ -2,20 +2,10 @@
 Official implementation of "Who Should Evolve? Uncertainty-Aware Role Bottleneck Inference for Multi-Agent LLM Training" with PyTorch.
 RISE converts step-level trajectory evidence into role-level update decisions for role-partitioned multi-step reasoning pipelines.
 
-## OpenRLHF Integration Points
-
-RISE is not a standalone trainer in this snapshot. It uses OpenRLHF components directly:
-
-- `openrlhf.models.actor.Actor` for role policies.
-- `openrlhf.models.loss.DPOLoss` for repair-side preference optimization.
-- `openrlhf.utils.get_strategy` and `openrlhf.utils.deepspeed.DeepspeedStrategy` for DeepSpeed-backed training.
-- `DeepSpeedRoleSelectiveUpdateWrapper` to freeze non-selected roles and step only the selected role.
-  
 ## Structure
 
 ```text
 RISE_CODE_FULL/
-  openrlhf/      OpenRLHF actor, loss, DeepSpeed strategy, trainer, dataset, and utility modules
   scripts/       Experiment, calibration, evaluation, and preprocessing entry points
   configs/       Method and judge configuration files
   prompts/       Judge and role prompt templates
@@ -74,4 +64,12 @@ orch: steps 1, 4
 ret:  steps 2, 3, 5
 syn:  steps 6, 7, 8
 ```
+## OpenRLHF Integration Points
 
+RISE is not a standalone trainer in this snapshot. It uses OpenRLHF components directly:
+
+- `openrlhf.models.actor.Actor` for role policies.
+- `openrlhf.models.loss.DPOLoss` for repair-side preference optimization.
+- `openrlhf.utils.get_strategy` and `openrlhf.utils.deepspeed.DeepspeedStrategy` for DeepSpeed-backed training.
+- `DeepSpeedRoleSelectiveUpdateWrapper` to freeze non-selected roles and step only the selected role.
+  
