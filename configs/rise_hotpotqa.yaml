@@ -16,6 +16,8 @@ update:
   success_action: reinforce
   failure_action: anchored_repair
   fallback_action: freeze_all
+training:
+  backend: public
 paths:
   train_jsonl: examples/toy_qa.jsonl
   eval_jsonl: examples/toy_qa.jsonl
